@@ -84,17 +84,17 @@ Use the finalScore function below to do the following:
 
 function finalScore(inning,playedInnings){
   let gameScore = {
-    "Home" : 0,
-    "Away" : 0
+    Home : 0,
+    Away : 0
   };
     for(let i = 0;i < playedInnings; i++){
       gameScore.Home += inning();
       gameScore.Away += inning();
     }
     return gameScore;
-}
+  }
 
-console.log(finalScore(inning,9));
+console.log("task 3 final score:", finalScore(inning,9));
 
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -102,16 +102,13 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(number){
-  let gameScore = {
-    "Home" : 0,
-    "Away" : 0
-  };
-  gameScore.Home += number();
-  gameScore.Away += number();
-  return gameScore;
-}
-console.log(getInningScore(inning));
+  function getInningScore(inning){
+   return {
+     Home: inning(),
+      Away: inning()
+    }
+  }
+  console.log("task 4 game inning score", getInningScore(inning));
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
@@ -155,26 +152,25 @@ Use the scoreboard function below to do the following:
   */
 
 function scoreboard(getInningScore,inning,playedInnings) {
-  let myArray = [];
-  let score = getInningScore(inning);
-  let homeWins = 0;
-  let awayWins = 0;
-  for(let i = 1;i < playedInnings;i++){
-   myArray.push(`Inning ${i}: Away ${score.Away} - Home ${score.Home}`)
-   awayWins += score.Away;
-   homeWins += score.Home;
+  let scoreboard = [];
+  let homeScore = 0;
+  let awayScore = 0;
+
+   for (let i = 0;i < playedInnings;i++){
+    let score = getInningScore(inning);
+    scoreboard.push(`Inning ${i}: Away ${score.Home} - Home ${score.Away}`);
+    homeScore += score.Home;
+    awayScore += score.Away;
+    
   }
-  if (homeWins === awayWins){
-    return `This game will require extra innings: Away ${awayWins} - Home ${homeWins}`
-  }else if(homeWins != awayWins){
-   return `Final Score: Away ${awayWins} - Home ${homeWins}`
+  if(awayScore === homeScore){
+    scoreboard.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+  }else if(awayScore != homeScore){
+   scoreboard.push(`Final Score: Away ${awayScore} - Home ${homeScore}`);  
   }
-  return myArray;
+  return scoreboard;
 }
-
-console.log(scoreboard(getInningScore,inning,9));
-
-
+console.log("Final scoreboard:",scoreboard(getInningScore,inning,9));
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo(){
